@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "HotSoupScript/*": ["./HotSoupScript/Public/*"]
+        }
+    },
+    "include": [
+        "Src/**/*",
+        "HotSoupScript/Public/**/*"
+    ]
+}

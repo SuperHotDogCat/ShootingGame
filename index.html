@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playground</title>
+</head>
+<body>
+    <p>
+        Script path: 
+        <input 
+            type = "text"
+            id = "scriptPathRequesting"
+            value = "Src/main.js"
+        />
+        <button id="loadScript">Load</button>
+    </p>
+
+    <script>
+        //get path
+        var scriptPath = "Src/main.js";
+        function GetScriptPath() {
+            let url = new URL(window.location.href);
+            if (url.searchParams.has("scriptPath")) {
+                return url.searchParams.get("scriptPath");
+            } else {
+                return scriptPath;
+            }
+        }
+        scriptPath = GetScriptPath();
+
+        //put it in to input
+        document.getElementById("scriptPathRequesting").value = scriptPath;
+
+        //action when reload
+        // ボタンクリック時の処理
+        document.getElementById('loadScript').addEventListener('click', function() {
+            // ユーザーから入力を受け取る
+            var userInput = document.getElementById('scriptPathRequesting').value;
+
+            // 現在のURLを取得
+            var currentURL = window.location.href;
+
+            // 入力をGETパラメータとしてURLに追加
+            var updatedURL = currentURL + '?scriptPath=' + encodeURIComponent(userInput);
+
+            // 更新されたURLでページを再読み込み
+            window.location.href = updatedURL;
+        });
+    </script>
+
+    <canvas id="canvas" width="800" height="600"></canvas>
+
+    <script src="HotSoupScript/Private/ModulesLoader.js"></script>
+    
+    <script>
+        //load script from the GET
+        ImportScript(scriptPath)
+
+        //Load from code to protect the order
+        ImportScript("HotSoupScript/Private/MainCaller.js")
+    </script>
+</body>
+<style>
+    canvas {
+        border: 1px solid black;
+    }
+</style>
+</html>
